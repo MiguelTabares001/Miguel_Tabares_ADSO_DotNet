@@ -1,53 +1,46 @@
 ﻿using System;
 
-class Program
+//----------Ejercicio 3---------------------- -
+
+/*-Realice un programa en c# que lea unas observaciones y reemplace los caracteres @ | & # por X. 
+Elimine los caracteres ? ¿. 
+Inserte al comienzo la palabra init. 
+Inserte al final la palabra end. 
+Imprimir todo en mayusculas.
+*/
+
+using System;
+
+public class HelloWorld
 {
-    static void Main(string[] args)
+    public void Main(string[] args)
     {
-        // Definicion de variables para el máximo, mínimo, cantidad de negativos y cantidad de positivos
-        int maximo = int.MinValue;
-        int minimo = int.MaxValue;
-        int cantidadNegativos = 0;
-        int cantidadPositivos = 0;
+        // Leer las cosas insertadas por el usuario
+        Console.Write("Inserte su observacion: ");
+        string input = Console.ReadLine();
 
+        // reemplazo @ | & # con una X
+        input = input.Replace("@", "X");
+        input = input.Replace("|", "X");
+        input = input.Replace("&", "X");
+        input = input.Replace("#", "X");
 
-        // Pido al usuario que ingrese la cantidad de números que desea procesar
-        Console.Write("Ingrese la cantidad de números a evaluar: ");
-        int cantidadNumeros = int.Parse(Console.ReadLine());
+        // eliminacion signos ? ¿
+        input = input.Replace("?", "");
+        input = input.Replace("¿", "");
 
-        // Pido al usuario que ingrese los números y realizamos los cálculos
-        for (int i = 0; i < cantidadNumeros; i++)
-        {
-            Console.Write($"Ingrese el número {i + 1}: ");
-            int numero = int.Parse(Console.ReadLine());
+        // Inserto init al principio
+        input = "init " + input;
 
-            // Clculo el máximo y el mínimo
-            if (numero > maximo)
-            {
-                maximo = numero;
-            }
-            if (numero < minimo)
-            {
-                minimo = numero;
-            }
+        // Insert end al final
+        input = input + " end";
 
-            // Recuento de negativos y los positivos
-            if (numero < 0)
-            {
-                cantidadNegativos++;
-            }
-            else if (numero > 0)
-            {
-                cantidadPositivos++;
-            }
-        }
+        // Convert to uppercase
+        input = input.ToUpper();
 
-       
-        Console.WriteLine($"El máximo valor ingresado es: {maximo}");
-        Console.WriteLine($"El mínimo valor ingresado es: {minimo}");
-        Console.WriteLine($"Cantidad de números negativos: {cantidadNegativos}");
-        Console.WriteLine($"Cantidad de números positivos: {cantidadPositivos}");
-
-        Console.ReadKey();
+        // Resultados
+        Console.WriteLine("REsultados:");
+        Console.WriteLine(input);
     }
 }
+

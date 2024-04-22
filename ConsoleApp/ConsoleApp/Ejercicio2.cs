@@ -1,53 +1,43 @@
 ﻿using System;
 
-class Program
+//----------------Ejercicio 2--------------
+//- En c# sin usar formularios, crear un programa que determine si una frase o palabra es palindroma. Contabilizar e imprimir numero de vocales, elimina los espacios a la hora de comprar si es palindromo o no, la frase o palabra o numero sea dada por el usuario en la consola. Ejemplo: ala 7007
+
+using System;
+
+public class PalindromeChecker
 {
-    static void Main(string[] args)
+    public void Main(string[] args)
     {
-        // Definicion de variables para el máximo, mínimo, cantidad de negativos y cantidad de positivos
-        int maximo = int.MinValue;
-        int minimo = int.MaxValue;
-        int cantidadNegativos = 0;
-        int cantidadPositivos = 0;
+        Console.Write("Enter a word or phrase: ");
+        string input = Console.ReadLine().ToLower(); // convertio el coso de entrada en minuscula
 
+        // Quito los espacios para que funcione !!
+        input = input.Replace(" ", "");
 
-        // Pido al usuario que ingrese la cantidad de números que desea procesar
-        Console.Write("Ingrese la cantidad de números a evaluar: ");
-        int cantidadNumeros = int.Parse(Console.ReadLine());
-
-        // Pido al usuario que ingrese los números y realizamos los cálculos
-        for (int i = 0; i < cantidadNumeros; i++)
+        // Conteo de vocales
+        int vowelCount = 0;
+        foreach (char c in input)
         {
-            Console.Write($"Ingrese el número {i + 1}: ");
-            int numero = int.Parse(Console.ReadLine());
-
-            // Clculo el máximo y el mínimo
-            if (numero > maximo)
+            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
             {
-                maximo = numero;
-            }
-            if (numero < minimo)
-            {
-                minimo = numero;
-            }
-
-            // Recuento de negativos y los positivos
-            if (numero < 0)
-            {
-                cantidadNegativos++;
-            }
-            else if (numero > 0)
-            {
-                cantidadPositivos++;
+                vowelCount++;
             }
         }
 
-       
-        Console.WriteLine($"El máximo valor ingresado es: {maximo}");
-        Console.WriteLine($"El mínimo valor ingresado es: {minimo}");
-        Console.WriteLine($"Cantidad de números negativos: {cantidadNegativos}");
-        Console.WriteLine($"Cantidad de números positivos: {cantidadPositivos}");
+        // Verifico si es palindromo
+        bool isPalindrome = true;
+        for (int i = 0, j = input.Length - 1; i < input.Length / 2; i++, j--)
+        {
+            if (input[i] != input[j])
+            {
+                isPalindrome = false;
+                break;
+            }
+        }
 
-        Console.ReadKey();
+        // SAlida tactica
+        Console.WriteLine("Number of vowels: " + vowelCount);
+        Console.WriteLine(isPalindrome ? input + " is a palindrome" : input + " is not a palindrome");
     }
 }
