@@ -1,46 +1,69 @@
-﻿using System;
+/*
+----------------Ejercicio 4---------------------- 
 
-//----------Ejercicio 3---------------------- -
-
-/*-Realice un programa en c# que lea unas observaciones y reemplace los caracteres @ | & # por X. 
-Elimine los caracteres ? ¿. 
-Inserte al comienzo la palabra init. 
-Inserte al final la palabra end. 
-Imprimir todo en mayusculas.
+ - Realizar un programa que permita llenar un array de n numeros reales. Imprimir el array. 
+Ejemplo:
+3, 2.45, 1, -3.5
+R/-3.5, 1, 2.45, 3
 */
 
 using System;
 
-public class HelloWorld
+class Program
 {
-    public void Main(string[] args)
+    static void Main(string[] args)
     {
-        // Leer las cosas insertadas por el usuario
-        Console.Write("Inserte su observacion: ");
-        string input = Console.ReadLine();
+        Console.Write("Ingrese el tamaño del arreglo: ");
+        int n = Convert.ToInt32(Console.ReadLine());
 
-        // reemplazo @ | & # con una X
-        input = input.Replace("@", "X");
-        input = input.Replace("|", "X");
-        input = input.Replace("&", "X");
-        input = input.Replace("#", "X");
+        double[] arreglo = new double[n];
 
-        // eliminacion signos ? ¿
-        input = input.Replace("?", "");
-        input = input.Replace("¿", "");
+        // Llenar el arreglo con números reales ingresados por el usuario
+        for (int i = 0; i < n; i++)
+        {
+            Console.Write($"Ingrese el elemento {i + 1}: ");
+            arreglo[i] = Convert.ToDouble(Console.ReadLine());
+        }
 
-        // Inserto init al principio
-        input = "init " + input;
+        Console.WriteLine("\nArreglo original:");
 
-        // Insert end al final
-        input = input + " end";
+        // Imprimir el arreglo en desorden
+        ImprimirArreglo(arreglo);
 
-        // Convert to uppercase
-        input = input.ToUpper();
+        // Ordenar el arreglo ascendente sin usar funciones del lenguaje
+        OrdenarArreglo(arreglo);
 
-        // Resultados
-        Console.WriteLine("REsultados:");
-        Console.WriteLine(input);
+        Console.WriteLine("\nArreglo ordenado:");
+
+        // Imprimir el arreglo ordenado
+        ImprimirArreglo(arreglo);
+    }
+
+    static void OrdenarArreglo(double[] arreglo)
+    {
+        int n = arreglo.Length;
+        for (int i = 0; i < n - 1; i++)
+        {
+            for (int j = 0; j < n - i - 1; j++)
+            {
+                if (arreglo[j] > arreglo[j + 1])
+                {
+                    // Intercambiar elementos
+                    double temp = arreglo[j];
+                    arreglo[j] = arreglo[j + 1];
+                    arreglo[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    static void ImprimirArreglo(double[] arreglo)
+    {
+        foreach (double num in arreglo)
+        {
+            Console.Write($"{num} ");
+        }
+        Console.WriteLine();
     }
 }
 
