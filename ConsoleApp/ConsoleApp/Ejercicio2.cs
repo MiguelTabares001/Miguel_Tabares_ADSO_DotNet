@@ -3,6 +3,7 @@
 
 using System;
 
+<<<<<<< HEAD
 public class Palindromo
 {
     public static void Main(string[] args)
@@ -14,6 +15,19 @@ public class Palindromo
         // quito espacios -> con esto se arreglo
         string cleanInput = input.Replace(" ", "").ToLower();
 
+=======
+public class Program
+{
+    public static void Main(string[] args)
+    {
+       
+        Console.Write("Ingrese una frase para verificar si es un palindromo: ");
+        string input = Console.ReadLine();
+
+        // quito espacios -> con esto se arreglo
+        string cleanInput = input.Replace(" ", "").ToLower();
+
+>>>>>>> 66dd16b99279caf594595362498863f9db404774
         // Reverso de la cadena
         char[] charArray = cleanInput.ToCharArray();
         Array.Reverse(charArray);
