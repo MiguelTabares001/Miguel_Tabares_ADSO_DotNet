@@ -1,0 +1,175 @@
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        string[] documentos = new string[100];
+        string[] nombres = new string[100];
+        int[] inasistencias = new int[100];
+        int contadorAprendices = 0;
+
+        while (true)
+        {
+            Console.WriteLine("Menu:");
+            Console.WriteLine("1. Registrar inasistencias");
+            Console.WriteLine("2. Listar todas las inasistencias");
+            Console.WriteLine("3. Listar los aprendices con inasistencias superiores a 3");
+            Console.WriteLine("4. Consultar el total de inasistencias por aprendiz");
+            Console.WriteLine("5. Valor a pagar");
+            Console.WriteLine("6. Numero de suerte");
+            Console.WriteLine("7. Salir");
+            Console.Write("Seleccione una opcion: ");
+            string opcion = Console.ReadLine();
+
+            switch (opcion)
+            {
+                case "1":
+                    RegistrarInasistencias(documentos, nombres, inasistencias, ref contadorAprendices);
+                    break;
+                case "2":
+                    ListarInasistencias(documentos, nombres, inasistencias, contadorAprendices);
+                    break;
+                case "3":
+                    ListarInasistenciasSuperioresTres(documentos, nombres, inasistencias, contadorAprendices);
+                    break;
+                case "4":
+                    ConsultarTotalInasistenciasPorAprendiz(documentos, nombres, inasistencias, contadorAprendices);
+                    break;
+                case "5":
+                    ValorAPagar();
+                    break;
+                case "6":
+                    NumeroDeSuerte();
+                    break;
+                case "7":
+                    Console.WriteLine("Saliendo del programa...");
+                    return;
+                default:
+                    Console.WriteLine("Opción no válida. Por favor, seleccione una opción válida.");
+                    break;
+            }
+        }
+    }
+
+    static void RegistrarInasistencias(string[] documentos, string[] nombres, int[] inasistencias, ref int contador)
+    {
+        Console.Write("Ingrese el documento del aprendiz: ");
+        string documento = Console.ReadLine();
+
+        int indice = Array.IndexOf(documentos, documento);
+
+        if (indice == -1)
+        {
+            Console.Write("Ingrese el nombre completo del aprendiz: ");
+            string nombre = Console.ReadLine();
+
+            Console.Write("Ingrese la cantidad de inasistencias: ");
+            int cantidad = int.Parse(Console.ReadLine());
+
+            while (cantidad < 0 || cantidad > 100)
+            {
+                Console.Write("La cantidad de inasistencias debe estar entre 0 y 100. Ingrese nuevamente: ");
+                cantidad = int.Parse(Console.ReadLine());
+            }
+
+            documentos[contador] = documento;
+            nombres[contador] = nombre;
+            inasistencias[contador] = cantidad;
+            contador++;
+        }
+        else
+        {
+            Console.Write("El aprendiz ya está registrado. Ingrese la cantidad de inasistencias actualizada: ");
+            int cantidad = int.Parse(Console.ReadLine());
+
+            while (cantidad < 0 || cantidad > 100)
+            {
+                Console.Write("La cantidad de inasistencias debe estar entre 0 y 100. Ingrese nuevamente: ");
+                cantidad = int.Parse(Console.ReadLine());
+            }
+
+            inasistencias[indice] = cantidad;
+        }
+    }
+
+    static void ListarInasistencias(string[] documentos, string[] nombres, int[] inasistencias, int contador)
+    {
+        Console.WriteLine("Listado de inasistencias:");
+        for (int i = 0; i < contador; i++)
+        {
+            Console.WriteLine($"Documento: {documentos[i]}, Nombre: {nombres[i]}, Inasistencias: {inasistencias[i]}");
+        }
+    }
+
+    static void ListarInasistenciasSuperioresTres(string[] documentos, string[] nombres, int[] inasistencias, int contador)
+    {
+        Console.WriteLine("Aprendices con inasistencias superiores a 3:");
+        for (int i = 0; i < contador; i++)
+        {
+            if (inasistencias[i] > 3)
+            {
+                Console.WriteLine($"Documento: {documentos[i]}, Nombre: {nombres[i]}, Inasistencias: {inasistencias[i]}");
+            }
+        }
+    }
+
+    static void ConsultarTotalInasistenciasPorAprendiz(string[] documentos, string[] nombres, int[] inasistencias, int contador)
+    {
+        Console.Write("Ingrese el documento del aprendiz: ");
+        string documento = Console.ReadLine();
+
+        int indice = Array.IndexOf(documentos, documento);
+
+        if (indice != -1)
+        {
+            Console.WriteLine($"Total de inasistencias para {nombres[indice]}: {inasistencias[indice]}");
+        }
+        else
+        {
+            Console.WriteLine("El aprendiz no está registrado.");
+        }
+    }
+
+    static void ValorAPagar()
+    {
+        Console.Write("Ingrese el codigo del producto: ");
+        string codigo = Console.ReadLine();
+
+        Console.Write("Ingrese el nombre del producto: ");
+        string nombre = Console.ReadLine();
+
+        Console.Write("Ingrese el precio del producto: ");
+        decimal precio = decimal.Parse(Console.ReadLine());
+
+        while (precio <= 0)
+        {
+            Console.Write("El precio del producto debe ser mayor que cero. Ingrese nuevamente: ");
+            precio = decimal.Parse(Console.ReadLine());
+        }
+
+        Console.Write("Ingrese la cantidad del producto: ");
+        int cantidad = int.Parse(Console.ReadLine());
+
+        while (cantidad <= 0)
+        {
+            Console.Write("La cantidad del producto debe ser mayor que cero. Ingrese nuevamente: ");
+            cantidad = int.Parse(Console.ReadLine());
+        }
+
+        decimal valorBruto = precio * cantidad;
+        decimal descuento = cantidad > 10 ? valorBruto * 0.1m : 0;
+        decimal valorNeto = valorBruto - descuento;
+        decimal iva = valorNeto * 0.19m;
+        decimal valorTotal = valorNeto + iva;
+
+        Console.WriteLine($"Valor a pagar: {valorTotal:C}");
+    }
+
+    static void NumeroDeSuerte()
+    {
+        Random rnd = new Random();
+        int numero = rnd.Next(0, 1000);
+        Console.WriteLine($"Numero de suerte: {numero:D3}");
+    }
+}
