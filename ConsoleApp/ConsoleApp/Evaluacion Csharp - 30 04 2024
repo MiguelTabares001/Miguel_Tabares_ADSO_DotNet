@@ -1,0 +1,134 @@
+/*
+ Evaluacion 1 de C# 30/04/2024 - MIGUEL ÁNGEL TABARES CANO ADSO 2742550. 
+ */
+
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        
+        Credito credito = new Credito(1000000);
+        int opcion;
+
+        do
+        {
+            Console.WriteLine("----- Menú -----");
+            Console.WriteLine("1. Registrar el valor total de compras");
+            Console.WriteLine("2. Realizar avances");
+            Console.WriteLine("3. Pagar Crédito");
+            Console.WriteLine("4. Consultar Cupo Crédito y Saldo por Pagar");
+            Console.WriteLine("5. Consultar Total Puntos");
+            Console.WriteLine("6. Salir");
+            Console.WriteLine("Ingrese su opción:");
+            opcion = Convert.ToInt32(Console.ReadLine());
+
+            switch (opcion)
+            {
+                case 1:
+                    Console.WriteLine("Ingrese el valor total de la compra:");
+                    double valorCompra = Convert.ToDouble(Console.ReadLine());
+
+                    credito.RegistrarCompra(valorCompra);
+                    break;
+                case 2:
+                    Console.WriteLine("Ingrese el valor del avance:");
+                    double valorAvance = Convert.ToDouble(Console.ReadLine());
+
+                    credito.RealizarAvance(valorAvance);
+                    break;
+                case 3:
+                    Console.WriteLine("Ingrese el valor a abonar:");
+                    double valorAbono = Convert.ToDouble(Console.ReadLine());
+
+                    credito.PagarCredito(valorAbono);
+                    break;
+                case 4:
+
+                    credito.ConsultarCupoYSaldo();
+                    break;
+                case 5:
+
+                    Console.WriteLine($"Total Puntos: {credito.CalcularTotalPuntos()} puntos");
+                    break;
+                case 6:
+                    Console.WriteLine("¡Hasta luego!");
+                    break;
+                default:
+                    Console.WriteLine("Opción no válida. Por favor, intente de nuevo.");
+                    break;
+            }
+
+        } while (opcion != 6);
+    }
+}
+
+class Credito
+{
+    private double cupoCredito; 
+    private double saldoPorPagar; 
+    private double totalPuntos; 
+
+    public Credito(double cupoCredito)
+    {
+        this.cupoCredito = cupoCredito;
+        this.saldoPorPagar = 0;
+        this.totalPuntos = 0;
+    }
+
+    public void RegistrarCompra(double valorCompra)
+    {
+        if (valorCompra > 0 && valorCompra <= cupoCredito - saldoPorPagar)
+        {
+            saldoPorPagar += valorCompra;
+            if (valorCompra >= 100000)
+            {
+                totalPuntos += valorCompra * 0.01;
+            }
+            Console.WriteLine("Compra registrada exitosamente.");
+        }
+        else
+        {
+            Console.WriteLine("El valor de la compra es inválido o excede el cupo del crédito.");
+        }
+    }
+
+    public void RealizarAvance(double valorAvance)
+    {
+        if (valorAvance > 0 && valorAvance <= cupoCredito - saldoPorPagar)
+        {
+            saldoPorPagar += valorAvance;
+            Console.WriteLine("Avance realizado exitosamente.");
+        }
+        else
+        {
+            Console.WriteLine("El valor del avance es inválido o excede el cupo del crédito.");
+        }
+    }
+
+    public void PagarCredito(double valorAbono)
+    {
+        if (valorAbono > 0 && valorAbono <= saldoPorPagar)
+        {
+            saldoPorPagar -= valorAbono;
+            Console.WriteLine("Crédito pagado exitosamente.");
+        }
+        else
+        {
+            Console.WriteLine("El valor del abono es inválido o excede el saldo por pagar.");
+        }
+    }
+
+    public void ConsultarCupoYSaldo()
+    {
+        Console.WriteLine($"Cupo del Crédito: {cupoCredito}");
+        Console.WriteLine($"Saldo por Pagar: {saldoPorPagar}");
+    }
+
+    public double CalcularTotalPuntos()
+    {
+        return totalPuntos;
+    }
+}
+
